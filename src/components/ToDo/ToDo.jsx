@@ -5,17 +5,16 @@ import { InputGroup, Form, Button } from "react-bootstrap";
 class ToDo extends Component {
   state = {
     inputValue: "",
-    tasks: [],
   };
   handleChange = (event) => {
+    const { value } = event.target;
     this.setState({
-      inputValue: event.target.value,
+      inputValue: value,
     });
   };
 
-  handleSub = (e) => {
-    const { handleSubmit } = this.props;
-    handleSubmit(this.state.inputValue);
+  handleSub = () => {
+    this.props.handleSubmit(this.state.inputValue);
     this.setState({
       inputValue: "",
     });
@@ -36,7 +35,7 @@ class ToDo extends Component {
         <InputGroup className="mb-5 mt-5">
           <Form.Control
             type="text"
-            placeholder="Add Task"
+            placeholder="Add New Task"
             onChange={this.handleChange}
             onKeyPress={this.handleEnter}
             value={this.state.inputValue}

@@ -1,11 +1,8 @@
-.main_tasks {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+.cardBody {
+    box-shadow: 0 15px 15px -2px rgb(79, 42, 245);
 }
 
-.tasks {
-    padding: 15px 30px;
-    background-color: rgba(94, 15, 184, .5);
-    border: 1px solid black;
+.checkbox {
+    text-align: end;
+    font-size: 10px;
 }
