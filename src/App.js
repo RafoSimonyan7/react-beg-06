@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import AddNewTask from "./components/AddNewTask/AddNewTask";
+import ToDo from "./components/ToDo/ToDo";
 
 const App = () => {
   return (
     <div className="main_wrapper">
-        <AddNewTask />
+        <ToDo />
     </div>
   );
 };
