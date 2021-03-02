@@ -101,7 +101,7 @@ class ToDo extends Component {
               className="p-2"
               onClick={this.deleteAllCheckedTasks}
             >
-              Delete Checked Task
+              Delete Checked Task(s)
             </Button>
           </Row>
         ) : (
