@@ -68,8 +68,10 @@ class ToDo extends Component {
   render() {
     const tasks = this.state.tasks.map((task) => {
       return (
+  
         <Col key={task._id} className="mt-3" xs={12} sm={6} md={4} lg={3}>
           <NewTask
+            key={task._id}
             task={task}
             handleDelete={this.handleDelete}
             toggleCheckedTask={this.toggleCheckedTask}
@@ -77,6 +79,7 @@ class ToDo extends Component {
             checkedTask={this.state.checkedTasks.has(task._id)}
           />
         </Col>
+        
       );
     });
 
@@ -94,6 +97,13 @@ class ToDo extends Component {
         <Row className="mt-5 d-flex justify-content-center">
           {tasks.length ? tasks : <p className={s.emptyText}>Tasks is empty</p>}
         </Row>
+        {/* <Row className="justify-content-end">
+          <Button
+            variant="primary"
+          >
+            Select All
+          </Button>
+        </Row> */}
         {!!this.state.checkedTasks.size ? (
           <Row className="mt-5 justify-content-center">
             <Button

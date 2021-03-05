@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import s from "./AddTask.module.css";
 import { InputGroup, Form, Button } from "react-bootstrap";
 
-class AddTask extends Component {
+class AddTask extends PureComponent {
   state = {
     inputValue: "",
   };

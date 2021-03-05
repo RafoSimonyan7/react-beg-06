@@ -3,6 +3,7 @@ import s from "./NewTask.module.css";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {memo} from "react"
 
 const NewTask = ({ task, handleDelete, toggleCheckedTask, isTasksChecked, checkedTask }) => {
   const deleteTask = (e) => {
@@ -17,6 +18,7 @@ const NewTask = ({ task, handleDelete, toggleCheckedTask, isTasksChecked, checke
   if (checkedTask) {
     classes.push(s.checked)
   }
+  
   return (
     <div className={classes.join(" ")}>
       <div className={s.checkbox}>
@@ -42,4 +44,4 @@ const NewTask = ({ task, handleDelete, toggleCheckedTask, isTasksChecked, checke
   );
 };
 
-export default NewTask;
+export default memo(NewTask);
