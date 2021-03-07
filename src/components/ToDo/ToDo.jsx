@@ -22,6 +22,7 @@ class ToDo extends Component {
       },
     ],
     checkedTasks: new Set(),
+    isAllTasksChecked: false,
   };
 
   handleSubmit = (value) => {
@@ -29,6 +30,7 @@ class ToDo extends Component {
     tasks.push({
       _id: idGenerator(),
       title: value,
+      isChecked: false,
     });
     this.setState({
       tasks,
@@ -65,10 +67,24 @@ class ToDo extends Component {
     });
   };
 
+  handleCheckedAllTasks = () => {
+    const { tasks, isAllTasksChecked } = this.state;
+    let checkedTasks = new Set();
+    if (!isAllTasksChecked) {
+      checkedTasks = new Set(this.state.checkedTasks);
+      tasks.forEach((task) => {
+        checkedTasks.add(task._id);
+      });
+    }
+    this.setState({
+      checkedTasks,
+      isAllTasksChecked: !isAllTasksChecked,
+    });
+  };
+
   render() {
     const tasks = this.state.tasks.map((task) => {
       return (
-  
         <Col key={task._id} className="mt-3" xs={12} sm={6} md={4} lg={3}>
           <NewTask
             key={task._id}
@@ -77,9 +93,9 @@ class ToDo extends Component {
             toggleCheckedTask={this.toggleCheckedTask}
             isTasksChecked={!!this.state.checkedTasks.size}
             checkedTask={this.state.checkedTasks.has(task._id)}
+            checked={this.state.checkedTasks.has(task._id)}
           />
         </Col>
-        
       );
     });
 
@@ -97,13 +113,14 @@ class ToDo extends Component {
         <Row className="mt-5 d-flex justify-content-center">
           {tasks.length ? tasks : <p className={s.emptyText}>Tasks is empty</p>}
         </Row>
-        {/* <Row className="justify-content-end">
+        <Row className="justify-content-end mt-3">
           <Button
             variant="primary"
+            onClick={this.handleCheckedAllTasks}
           >
-            Select All
+            {this.state.isAllTasksChecked? "Remove checked" : "Select All"}
           </Button>
-        </Row> */}
+        </Row>
         {!!this.state.checkedTasks.size ? (
           <Row className="mt-5 justify-content-center">
             <Button

@@ -3,9 +3,16 @@ import s from "./NewTask.module.css";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
-import {memo} from "react"
+import { memo } from "react";
 
-const NewTask = ({ task, handleDelete, toggleCheckedTask, isTasksChecked, checkedTask }) => {
+const NewTask = ({
+  task,
+  handleDelete,
+  toggleCheckedTask,
+  isTasksChecked,
+  checkedTask,
+  checked
+}) => {
   const deleteTask = (e) => {
     handleDelete(task._id);
   };
@@ -14,15 +21,15 @@ const NewTask = ({ task, handleDelete, toggleCheckedTask, isTasksChecked, checke
     toggleCheckedTask(task._id);
   };
 
-  const classes = [s.mainTasks]
+  const classes = [s.mainTasks];
   if (checkedTask) {
-    classes.push(s.checked)
+    classes.push(s.checked);
   }
-  
+
   return (
     <div className={classes.join(" ")}>
       <div className={s.checkbox}>
-        <input type="checkbox" onClick={toggleCheck} />
+        <input type="checkbox" onChange={toggleCheck} checked={checked} />
       </div>
       <div className={s.contentInfo}>
         <p>{task.title}</p>
