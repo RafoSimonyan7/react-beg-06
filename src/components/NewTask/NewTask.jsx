@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { memo } from "react";
+import PropTypes from "prop-types"
 
 const NewTask = ({
   task,
@@ -50,5 +51,18 @@ const NewTask = ({
     </div>
   );
 };
+
+NewTask.propTypes = {
+  task: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+  }),
+  handleDelete: PropTypes.func.isRequired,
+  toggleCheckedTask: PropTypes.func.isRequired,
+  isTasksChecked: PropTypes.bool.isRequired,
+  checkedTask: PropTypes.bool.isRequired,
+  checked: PropTypes.bool.isRequired
+}
 
 export default memo(NewTask);

@@ -11,18 +11,22 @@ class ToDo extends Component {
       {
         _id: idGenerator(),
         title: "task 1",
+        description: "task 1"
       },
       {
         _id: idGenerator(),
         title: "task 2",
+        description: "task 2"
       },
       {
         _id: idGenerator(),
         title: "task 3",
+        description: "task 3"
       },
     ],
     checkedTasks: new Set(),
     isAllTasksChecked: false,
+    isDeletedAllTasks: false,
   };
 
   handleSubmit = (value) => {
@@ -83,6 +87,7 @@ class ToDo extends Component {
   };
 
   render() {
+    const { checkedTasks } = this.state;
     const tasks = this.state.tasks.map((task) => {
       return (
         <Col key={task._id} className="mt-3" xs={12} sm={6} md={4} lg={3}>
@@ -114,11 +119,10 @@ class ToDo extends Component {
           {tasks.length ? tasks : <p className={s.emptyText}>Tasks is empty</p>}
         </Row>
         <Row className="justify-content-end mt-3">
-          <Button
-            variant="primary"
-            onClick={this.handleCheckedAllTasks}
-          >
-            {this.state.isAllTasksChecked? "Remove checked" : "Select All"}
+          <Button variant="primary" onClick={this.handleCheckedAllTasks}>
+            {tasks.length === checkedTasks.size
+              ? "Remove Selected"
+              : "Check All"}
           </Button>
         </Row>
         {!!this.state.checkedTasks.size ? (
