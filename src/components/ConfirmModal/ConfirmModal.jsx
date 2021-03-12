@@ -17,13 +17,10 @@ class DeleteAllTasksModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          {/* <Modal.Title id="contained-modal-title-vcenter">
-            Add Task
-          </Modal.Title> */}
+          <Modal.Title id="contained-modal-title-vcenter">
+            Do you want to delete checked Task(s)?
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-         <p style={{fontSize: "22px"}}> Do you want to delete checked Task(s)?</p>
-        </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide} variant="secondary">
             Close

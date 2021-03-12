@@ -167,7 +167,7 @@ class ToDo extends Component {
           <AddTaskModal
             onHide={this.toggleOpenAddTaskModal}
             handleSubmit={this.handleSubmit}
-            isAnyTaskChecked={!!checkedTasks.size}
+            isTaskChecked={!!checkedTasks.size}
           />
         )}
         {isTasksDeleteModalOpen && (
