@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import AddTaskModal from "../AddTaskModal/AddTaskModal";
 import NewTask from "../NewTask/NewTask";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import idGenerator from "../../utils/idGenerator";
 import s from "./ToDo.module.css";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import AddOrEditTaskModal from "../AddOrEditTaskModal/AddOrEditTaskModal";
 
 class ToDo extends Component {
   state = {
@@ -27,8 +27,8 @@ class ToDo extends Component {
     ],
     checkedTasks: new Set(),
     isAllTasksChecked: false,
-    isAddModalTaskOpen: false,
     isTasksDeleteModalOpen: false,
+    editTasks: null,
   };
 
   handleSubmit = (formData) => {
@@ -87,25 +87,42 @@ class ToDo extends Component {
     });
   };
 
-  toggleOpenAddTaskModal = () => {
-    this.setState({
-      isAddModalTaskOpen: !this.state.isAddModalTaskOpen,
-    });
-  };
-
+  
   toggleOpenDeleteTasksModal = () => {
     this.setState({
       isTasksDeleteModalOpen: !this.state.isTasksDeleteModalOpen,
     });
   };
 
+  isOpenAddOrEditTasksModal = (editTasks) => {
+    this.setState({
+      editTasks
+    });
+  };
+
+  closeEditTaskModal = () => {
+    this.setState({
+      editTasks: null,
+    });
+  };
+
+  handleEditTask = (editTasks) => {
+    const tasks = [...this.state.tasks];
+    const taskIdx = tasks.findIndex(task => task._id === editTasks._id);
+    tasks[taskIdx] = editTasks;
+    this.setState({
+      tasks,
+    });
+  };
+
   render() {
     const {
+      tasks,
       checkedTasks,
-      isAddModalTaskOpen,
       isTasksDeleteModalOpen,
+      editTasks,
     } = this.state;
-    const tasks = this.state.tasks.map((task) => {
+    const task = this.state.tasks.map((task) => {
       return (
         <Col key={task._id} className="mt-3" xs={12} sm={6} md={4} lg={3}>
           <NewTask
@@ -116,6 +133,7 @@ class ToDo extends Component {
             isTasksChecked={!!this.state.checkedTasks.size}
             checkedTask={this.state.checkedTasks.has(task._id)}
             checked={this.state.checkedTasks.has(task._id)}
+            isOpenAddOrEditTasksModal={this.isOpenAddOrEditTasksModal}
           />
         </Col>
       );
@@ -131,12 +149,12 @@ class ToDo extends Component {
           </Row>
           <Row className="mt-5">
             <Col>
-              <Button onClick={this.toggleOpenAddTaskModal}>Add Task</Button>
+              <Button onClick={this.isOpenAddOrEditTasksModal}>Add Task</Button>
             </Col>
           </Row>
           <Row className="mt-5 d-flex justify-content-center">
-            {tasks.length ? (
-              tasks
+            {task.length ? (
+              task
             ) : (
               <p className={s.emptyText}>Tasks is empty</p>
             )}
@@ -162,18 +180,19 @@ class ToDo extends Component {
             <div></div>
           )}
         </Container>
-
-        {isAddModalTaskOpen && (
-          <AddTaskModal
-            onHide={this.toggleOpenAddTaskModal}
-            handleSubmit={this.handleSubmit}
-            isTaskChecked={!!checkedTasks.size}
-          />
-        )}
         {isTasksDeleteModalOpen && (
           <ConfirmModal
             onHide={this.toggleOpenDeleteTasksModal}
             deleteAllCheckedTasks={this.deleteAllCheckedTasks}
+          />
+        )}
+        {editTasks && (
+          <AddOrEditTaskModal
+            editTasks={editTasks}
+            onHide={this.closeEditTaskModal}
+            isModalTaskOpen={editTasks._id}
+            handleAddNewTask={this.handleSubmit}
+            handleEditTask={this.handleEditTask}
           />
         )}
       </div>

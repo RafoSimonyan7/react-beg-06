@@ -13,6 +13,7 @@ const NewTask = ({
   isTasksChecked,
   checkedTask,
   checked,
+  isOpenAddOrEditTasksModal,
 }) => {
   const deleteTask = (e) => {
     handleDelete(task._id);
@@ -20,6 +21,10 @@ const NewTask = ({
 
   const toggleCheck = (e) => {
     toggleCheckedTask(task._id);
+  };
+
+  const handleEdit = (e) => {
+    isOpenAddOrEditTasksModal(task);
   };
 
   const classes = [s.mainTasks];
@@ -45,7 +50,11 @@ const NewTask = ({
         >
           <FontAwesomeIcon icon={faTrashAlt} />
         </Button>
-        <Button variant="outline-warning" disabled={isTasksChecked}>
+        <Button
+          variant="outline-warning"
+          disabled={isTasksChecked}
+          onClick={handleEdit}
+        >
           <FontAwesomeIcon icon={faEdit} />
         </Button>
       </div>

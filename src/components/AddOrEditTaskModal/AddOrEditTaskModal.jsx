@@ -1,12 +1,12 @@
 import React, { Component, createRef } from "react";
-import s from "./AddTaskModal.module.css";
-import { Form, Button, Modal } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 
-class AddTask extends Component {
+class EditTaskModal extends Component {
   constructor(props) {
     super(props);
     this.inputRef = createRef();
     this.state = {
+      ...props.editTasks,
       title: "",
       description: "",
     };
@@ -18,16 +18,18 @@ class AddTask extends Component {
     });
   };
 
-  handleSub = ({ type, key }) => {
-    const { title, description } = this.state;
-    if (!title || !description || (type === "keypress" && key !== "Enter")) {
-      return;
+  handleSubmit = () => {
+    const { isModalTaskOpen } = this.props;
+    if (isModalTaskOpen === undefined) {
+      const { title, description } = this.state;
+      const tasksData = {
+        title,
+        description,
+      };
+      this.props.handleAddNewTask(tasksData);
+    } else {
+      this.props.handleEditTask(this.state);
     }
-    const tasksData = {
-      title,
-      description,
-    };
-    this.props.handleSubmit(tasksData);
     this.props.onHide();
   };
   componentDidMount() {
@@ -35,9 +37,10 @@ class AddTask extends Component {
   }
 
   render() {
-    const { isTasksChecked, onHide } = this.props;
+    const { onHide, isModalTaskOpen } = this.props;
+    const {title, description} = this.state
     return (
-      <div className={s.form_group}>
+      <div>
         <Modal
           show={true}
           onHide={onHide}
@@ -47,7 +50,7 @@ class AddTask extends Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Add Task
+              {isModalTaskOpen === undefined ? "Add Task" : "Edit Task"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -58,10 +61,8 @@ class AddTask extends Component {
                   type="text"
                   placeholder="Title"
                   onChange={this.handleChange}
-                  onKeyPress={this.handleSub}
-                  disabled={isTasksChecked}
+                  value={title}
                   ref={this.inputRef}
-                  value={this.state.title}
                 />
               </Form.Group>
               <Form.Group>
@@ -72,8 +73,7 @@ class AddTask extends Component {
                   style={{ resize: "none" }}
                   placeholder="Description"
                   onChange={this.handleChange}
-                  value={this.state.description}
-                  disabled={isTasksChecked}
+                  value={description}
                 />
               </Form.Group>
             </Form>
@@ -83,12 +83,10 @@ class AddTask extends Component {
               Close
             </Button>
             <Button
-              onClick={this.handleSub}
-              disabled={
-                isTasksChecked || !this.state.title || !this.state.description
-              }
+              onClick={this.handleSubmit}
+              disabled={!this.state.title || !this.state.description}
             >
-              Add
+              {isModalTaskOpen === undefined ? "Add" : "Save Changes"}
             </Button>
           </Modal.Footer>
         </Modal>
@@ -97,4 +95,4 @@ class AddTask extends Component {
   }
 }
 
-export default AddTask;
+export default EditTaskModal;
