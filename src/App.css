@@ -1,15 +1,4 @@
-table,
-th,
-td {
-  text-align: center;
-}
-
-th {
-  border: 1px solid grey;
-}
-
-
-
-table {
-  width: 60%;
+.main_wrapper {
+    text-align: center;
+    height: 100vh;
 }

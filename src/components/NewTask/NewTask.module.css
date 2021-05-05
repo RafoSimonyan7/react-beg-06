@@ -1,0 +1,31 @@
+.mainTasks {
+    padding: 5px;
+    border-radius: 15px;
+    background-color: white;
+    height: auto;
+    box-shadow: 0 15px 15px -2px rgb(79, 42, 245);
+}
+.checked {
+    opacity: 0.6;
+}
+
+.checkbox {
+    text-align: end;
+    font-size: 10px;
+}
+
+.contentInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
